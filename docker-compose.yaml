@@ -4,16 +4,16 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
-      MYSQL_USER: ${WORDPRESS_DB_USER} 
+      MYSQL_USER: ${WORDPRESS_DB_USER}
       MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD}
     restart: always
     volumes:
-      - ./mysql_data:/var/lib/mysql #This will help persist mysqldb container data generated at '/var/lib/mysql' in named volume mysqldb_data
-   networks:
-     - cloudflare_wordpress
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - cloudflare_wordpress
 
   #Defining wordpress service
-  wordpress: 
+  wordpress:
     image: wordpress:latest
     restart: always
     depends_on:
@@ -21,14 +21,14 @@ services:
     ports:
       - 8080:80
     environment:
-      WORDPRESS_DB_HOST: mysqldb 
+      WORDPRESS_DB_HOST: mysqldb
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD} 
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
     volumes:
-      - ./wordpress_data:/var/www/html #This will help persist wordpress container data generated at '/var/www/html' in named volume wordpress_data 
-   networks:
-     - cloudflare_wordpress
+      - ./wordpress_data:/var/www/html
+    networks:
+      - cloudflare_wordpress
 
   #Cloudflare tunnel / zero trust
   tunnel:
@@ -39,13 +39,11 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
     networks:
      - cloudflare_wordpress
-     
-#Define volumes
+
 volumes:
   mysqldb_data:
   wordpress_data:
 
-#Define networks
 networks:
   cloudflare_wordpress:
     drive: bridge
