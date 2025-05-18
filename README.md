@@ -27,7 +27,7 @@ git clone git@github.com:wheelsdirty/wordpress_cloudflared.git
 cp .env.example .env
 ```
 
-4. Fill in the values in the `.env.
+4. Fill in the values in the `.env`.
 
 5. Build the services.
 
