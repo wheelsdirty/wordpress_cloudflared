@@ -1,2 +1,5 @@
 .env
+.secret
 temp-credentials
+mysql_data/*
+wordpress_data/*
